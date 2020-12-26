@@ -1,1 +1,34 @@
-Choses à faire : 
+Menu principal :
+-Lancer le jeux
+-Options
+ -Nbre de joueurs (1 ou 2)
+  -Si 1 joueur : Faire une IA (pas forcément intelligente)
+ -Taille de la grille (entre 3 et 9)
+
+Jeux :
+-Début
+ -Placement des pions sur une case 
+  -L'un après l'autre
+  -sur 2 cases différentes
+-Durant la partie 
+ -Alternance des tours
+ -Le joueur doit 
+  -se déplacer vers une case adjacente
+  -condamner une case libre
+
+Ecran de victoire :
+-Déclencher lorsqu'un pion est bloqué
+-Retour vers le menu principal
+-Mettre fin au jeu.
+
+
+
+Choses à essayer si on a encore du temps
+Choisir son nom
+nbre de victoires
+Best score (temps & nbre de tours)
+Choisir la couleur du pion
+Feux d'artifice à la fin
+
+
+Timer
