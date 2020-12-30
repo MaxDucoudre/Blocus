@@ -1,9 +1,11 @@
 Menu principal :
 -Lancer le jeux
+-stats
 -Options
  -Nbre de joueurs (1 ou 2)
   -Si 1 joueur : Faire une IA (pas forcément intelligente)
  -Taille de la grille (entre 3 et 9)
+ -quitter
 
 Jeux :
 -Début
@@ -16,6 +18,10 @@ Jeux :
   -se déplacer vers une case adjacente
   -condamner une case libre
 
+
+
+  
+
 Ecran de victoire :
 -Déclencher lorsqu'un pion est bloqué
 -Retour vers le menu principal
@@ -23,12 +29,12 @@ Ecran de victoire :
 
 
 
-Choses à essayer si on a encore du temps
-Choisir son nom
+
+
+
+Système de nom de joueur
 nbre de victoires
-Best score (temps & nbre de tours)
+Best score (nbre de tours)
 Choisir la couleur du pion
-Feux d'artifice à la fin
-
-
 Timer
+
