@@ -31,7 +31,5 @@ int main(void) {
 			jeux();
 			lancer_partie = 0;
 		}
-
 	}
-
 }
