@@ -5,8 +5,7 @@
 
 
 
-char verification_victoire(int taille_grille, int coord_largeur_orange, int coord_hauteur_orange, int coord_largeur_bleu, int coord_hauteur_bleu, int num_sprite_orange, int num_sprite_bleu) {
-		int case_prise[taille_grille][taille_grille];
+char verification_victoire(int taille_grille, int case_prise[taille_grille][taille_grille], int coord_largeur_orange, int coord_hauteur_orange, int coord_largeur_bleu, int coord_hauteur_bleu, int num_sprite_orange, int num_sprite_bleu) {
 
 	if(case_prise[coord_largeur_orange+1][coord_hauteur_orange-1] == 1 && case_prise[coord_largeur_orange-1][coord_hauteur_orange] == 1 && case_prise[coord_largeur_orange-1][coord_hauteur_orange+1] == 1 && case_prise[coord_largeur_orange+1][coord_hauteur_orange-1] == 1 && case_prise[coord_largeur_orange][coord_hauteur_orange+1] == 1 && case_prise[coord_largeur_orange+1][coord_hauteur_orange-1] == 1 && case_prise[coord_largeur_orange+1][coord_hauteur_orange] == 1 && case_prise[coord_largeur_orange+1][coord_hauteur_orange+1] == 1) {
 		LibererSprite(num_sprite_orange);

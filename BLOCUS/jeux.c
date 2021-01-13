@@ -356,9 +356,6 @@ char debut_jeux(int taille_grille) {
 								}
 
 
-
-
-
 								bouton_notification("Tour d'Orange : Bougez d'une case maximum", 5, "orange");
 								break;
 
@@ -376,14 +373,13 @@ char debut_jeux(int taille_grille) {
 
 
 
-		gagnant = verification_victoire(taille_grille, coord_largeur_orange, coord_hauteur_orange, coord_largeur_bleu, coord_hauteur_bleu, num_sprite_orange, num_sprite_bleu);
-			if(gagnant == 'b') {
-				return gagnant;
-			} else if(gagnant == 'o') {
-				return gagnant;
-			}
-
-
+		gagnant = verification_victoire(taille_grille, case_prise, coord_largeur_orange, coord_hauteur_orange, coord_largeur_bleu, coord_hauteur_bleu, num_sprite_orange, num_sprite_bleu);
+		if (gagnant == 'o') {
+			return gagnant;
+		}
+		if (gagnant == 'b') {
+			return gagnant;
+		}
 
 		bouton_notification("Tour de Orange : Placer un mur", 5, "orange");
 		placer_mur_orange = 0;
@@ -446,12 +442,14 @@ char debut_jeux(int taille_grille) {
 
 
 			/*Verif defaite  orange */
-		gagnant = verification_victoire(taille_grille, coord_largeur_orange, coord_hauteur_orange, coord_largeur_bleu, coord_hauteur_bleu, num_sprite_orange, num_sprite_bleu);
-			if(gagnant == 'b') {
-				return gagnant;
-			} else if(gagnant == 'o') {
-				return gagnant;
-			}
+		gagnant = verification_victoire(taille_grille, case_prise, coord_largeur_orange, coord_hauteur_orange, coord_largeur_bleu, coord_hauteur_bleu, num_sprite_orange, num_sprite_bleu);
+		if (gagnant == 'o') {
+			return gagnant;
+		}
+		if (gagnant == 'b') {
+			return gagnant;
+		}
+
 
 
 		bouton_notification("Tour de bleu : Bougez votre tour", 5, "bleu");
@@ -535,12 +533,14 @@ char debut_jeux(int taille_grille) {
 
 
 			/*Verif defaite  orange */
-		gagnant = verification_victoire(taille_grille, coord_largeur_orange, coord_hauteur_orange, coord_largeur_bleu, coord_hauteur_bleu, num_sprite_orange, num_sprite_bleu);
-			if(gagnant == 'b') {
-				return gagnant;
-			} else if(gagnant == 'o') {
-				return gagnant;
-			}
+		gagnant = verification_victoire(taille_grille, case_prise, coord_largeur_orange, coord_hauteur_orange, coord_largeur_bleu, coord_hauteur_bleu, num_sprite_orange, num_sprite_bleu);
+		if (gagnant == 'o') {
+			return gagnant;
+		}
+		if (gagnant == 'b') {
+			return gagnant;
+		}
+
 
 		bouton_notification("Tour de bleu : placer un mur", 5, "bleu");
 		placer_mur_bleu = 0;
@@ -605,12 +605,13 @@ char debut_jeux(int taille_grille) {
 	}
 
 	/*Verif defaite  orange */
-		gagnant = verification_victoire(taille_grille, coord_largeur_orange, coord_hauteur_orange, coord_largeur_bleu, coord_hauteur_bleu, num_sprite_orange, num_sprite_bleu);
-			if(gagnant == 'b') {
-				return gagnant;
-			} else if(gagnant == 'o') {
-				return gagnant;
-			}
+	gagnant = verification_victoire(taille_grille, case_prise, coord_largeur_orange, coord_hauteur_orange, coord_largeur_bleu, coord_hauteur_bleu, num_sprite_orange, num_sprite_bleu);
+	if (gagnant == 'o') {
+		return gagnant;
+	}
+		if (gagnant == 'b') {
+		return gagnant;
+	}
 
 
 			/* Bloquer */
