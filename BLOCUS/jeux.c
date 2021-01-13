@@ -4,6 +4,7 @@
 		#include"grille.h"
 		#include"souris_jeux.h"
 		#include"verification.h"
+		#include"ia_jeux.h"
 		#include<unistd.h>
 
 
@@ -25,7 +26,7 @@ int charger_pion(int taille_grille, char *couleur_pion) {
 		}
 
 		sprite_bleu[11] = caractere_taille_grille;
-		printf("%s", sprite_bleu);
+		printf("%s chargé\n", sprite_bleu);
 		sprite_num = ChargerSprite(sprite_bleu);
 		return sprite_num;
 
@@ -39,7 +40,7 @@ int charger_pion(int taille_grille, char *couleur_pion) {
 		}
 
 		sprite_orange[13] = caractere_taille_grille;
-		printf("%s", sprite_orange);
+		printf("%s chargé\n", sprite_orange);
 		sprite_num = ChargerSprite(sprite_orange);
 
 		return sprite_num;
@@ -82,7 +83,7 @@ void bouton_notification(char *texte, int decalage, char *color) {
 
 
 
-void ecran_fin(char gagnant) {
+int ecran_fin(char gagnant) {
 	int hauteur_fenetre = 600;
 	int largeur_fenetre = 800;
 	couleur grey = 7697781;
@@ -92,6 +93,7 @@ void ecran_fin(char gagnant) {
 	couleur orange = 16344064;
 	int num_v_o,num_d_b;
 	int num_v_b,num_d_o;
+	int cliquee;
 
 	short int quitter_ecran_fin;
 
@@ -149,8 +151,15 @@ void ecran_fin(char gagnant) {
 		} else {
 			ChoisirCouleurDessin(lite_black);
 			DessinerRectangle(largeur_fenetre*0.20, hauteur_fenetre*0.92, 480, 40);
-
 		}
+		cliquee = SourisCliquee();
+		if(cliquee == 1) {
+			if(_X > largeur_fenetre*0.20 && _X < largeur_fenetre*0.20 + 480 && _Y > hauteur_fenetre*0.92 && _Y < hauteur_fenetre*92 + 40) {
+				puts("Quitter la partie");
+				return 1;
+			}
+		}
+
 	} while(quitter_ecran_fin != 1);
 
 }
@@ -161,8 +170,6 @@ void ecran_fin(char gagnant) {
 char debut_jeux(int taille_grille) {
 	int hauteur_fenetre = 600;
 	int largeur_fenetre = 800;
-	float cote_grille = (hauteur_fenetre-(hauteur_fenetre*0.2));
-	float cote_case = cote_grille/taille_grille;
 	int coord_hauteur, coord_largeur;
 	int cliquee;
 
@@ -196,10 +203,11 @@ char debut_jeux(int taille_grille) {
 	int position_x_orange_mur, position_x_bleu_mur;
 	int position_y_orange_mur, position_y_bleu_mur;
 	int case_prise[taille_grille][taille_grille];
-	int reset_tab;
-	int a,b;
 
-	printf("%d", taille_grille);
+	float cote_grille = (hauteur_fenetre-(hauteur_fenetre*0.2));
+	float cote_case = cote_grille/taille_grille;
+
+	printf("Taille grille : %dx%d\n", taille_grille, taille_grille);
 
 	dessiner_grille(taille_grille);
 	num_sprite_bleu = charger_pion(taille_grille, "bleu");
@@ -216,9 +224,9 @@ char debut_jeux(int taille_grille) {
 		for(j = 0; j < taille_grille; j++) {
 			case_prise[j][i] = 0;
 			printf("%d ", case_prise[j][i]);
-
 		}
 	}
+	printf("\n");
 
 
 	fflush(0);
@@ -233,7 +241,7 @@ char debut_jeux(int taille_grille) {
 				for(coord_hauteur = 0; coord_hauteur<taille_grille; coord_hauteur++) {
 					for(coord_largeur = 0; coord_largeur<taille_grille; coord_largeur++) {
 						if(_X > largeur_fenetre*0.2 + coord_largeur*(cote_grille/taille_grille) && _X < largeur_fenetre*0.2 + (coord_largeur+1)*(cote_grille/taille_grille) && _Y > hauteur_fenetre*0.1 + coord_hauteur*(cote_grille/taille_grille) && _Y < hauteur_fenetre*0.1 + (coord_hauteur+1)*(cote_grille/taille_grille)) {
-							printf("%d %d\n", coord_largeur+1, coord_hauteur+1);
+							printf("Pion placé : %d %d\n", coord_largeur+1, coord_hauteur+1);
 							position_x_orange = largeur_fenetre*0.2 + coord_largeur*(cote_grille/taille_grille);
 							position_y_orange = hauteur_fenetre*0.1 + coord_hauteur*(cote_grille/taille_grille);
 
@@ -264,7 +272,7 @@ char debut_jeux(int taille_grille) {
 				for(coord_hauteur = 0; coord_hauteur<taille_grille; coord_hauteur++) {
 					for(coord_largeur = 0; coord_largeur<taille_grille; coord_largeur++) {
 						if(_X > largeur_fenetre*0.2 + coord_largeur*(cote_grille/taille_grille) && _X < largeur_fenetre*0.2 + (coord_largeur+1)*(cote_grille/taille_grille) && _Y > hauteur_fenetre*0.1 + coord_hauteur*(cote_grille/taille_grille) && _Y < hauteur_fenetre*0.1 + (coord_hauteur+1)*(cote_grille/taille_grille)) {
-							printf("%d %d\n", coord_largeur+1, coord_hauteur+1);
+							printf("Pion placé : %d %d\n", coord_largeur+1, coord_hauteur+1);
 							position_x_bleu = largeur_fenetre*0.2 + coord_largeur*(cote_grille/taille_grille);
 							position_y_bleu = hauteur_fenetre*0.1 + coord_hauteur*(cote_grille/taille_grille);
 
@@ -291,6 +299,8 @@ char debut_jeux(int taille_grille) {
 
 	fin_partie = 0;
 	while(fin_partie == 0) {
+
+
 
 
 			/* Deplacement */
@@ -336,9 +346,9 @@ char debut_jeux(int taille_grille) {
 								}
 
 
-								printf("coord_largeur_orange :%d\n coord_largeur_orange %d\n\n", coord_largeur_orange, coord_hauteur_orange);
+								printf("Position orange : %d %d\n", coord_largeur_orange, coord_hauteur_orange);
 
-								printf("coord_largeur :%d\n coord_hauteur :%d\n", coord_largeur, coord_hauteur);
+								printf("Position clique : %d %d\n\n", coord_largeur, coord_hauteur);
 
 
 
@@ -432,6 +442,8 @@ char debut_jeux(int taille_grille) {
 
 									}
 								}
+								printf("\n");
+
 
 							}
 						}
@@ -444,7 +456,6 @@ char debut_jeux(int taille_grille) {
 		}
 
 
-			/*Verif defaite  orange */
 		
 		gagnant = verification_victoire(taille_grille, case_prise, coord_largeur_orange, coord_hauteur_orange, num_sprite_orange, num_sprite_bleu);
 		if (gagnant == 1) {
@@ -502,10 +513,10 @@ char debut_jeux(int taille_grille) {
 									break;									
 								}
 
+								printf("Position bleu : %d %d\n", coord_largeur_bleu, coord_hauteur_bleu);
 
-								printf("coord_largeur :%d\n coord_hauteur :%d\n", coord_largeur, coord_hauteur);
+								printf("Position clique : %d %d\n\n", coord_largeur, coord_hauteur);
 
-								printf("coord_largeur_bleu :%d\n coord_largeur_bleu %d\n\n", coord_largeur_bleu, coord_hauteur_bleu);
 
 										/* */
 								if(coord_largeur_bleu == coord_largeur-1 && coord_hauteur_bleu == coord_hauteur+1 || coord_largeur_bleu == coord_largeur && coord_hauteur_bleu == coord_hauteur-1 || coord_largeur_bleu == coord_largeur && coord_hauteur_bleu == coord_hauteur+1 || coord_largeur_bleu == coord_largeur-1 && coord_hauteur_bleu == coord_hauteur-1 || coord_largeur_bleu == coord_largeur+1 && coord_hauteur_bleu == coord_hauteur || coord_largeur_bleu == coord_largeur+1 && coord_hauteur_bleu == coord_hauteur+1 || coord_largeur_bleu == coord_largeur+1 && coord_hauteur_bleu == coord_hauteur-1 || coord_largeur_bleu == coord_largeur-1 && coord_hauteur_bleu == coord_hauteur || coord_largeur_bleu == coord_largeur-1 && coord_hauteur_bleu == coord_hauteur-1) {
@@ -596,11 +607,10 @@ char debut_jeux(int taille_grille) {
 									printf("\n");
 									for(j = 0; j < taille_grille; j++) {
 										printf("%d ", case_prise[j][i]);
-
-
-
 									}
 								}
+								printf("\n");
+
 							}
 						}
 
@@ -612,9 +622,6 @@ char debut_jeux(int taille_grille) {
 			}
 		}
 
-	}
-
-	/*Verif defaite  orange */
 
 		gagnant = verification_victoire(taille_grille, case_prise, coord_largeur_orange, coord_hauteur_orange, num_sprite_orange, num_sprite_bleu);
 		if (gagnant == 1) {
@@ -625,20 +632,11 @@ char debut_jeux(int taille_grille) {
 		if (gagnant == 1) {
 			return 'o';
 		}
-
-
-
-			/* Bloquer */
-
-
+	}
 }
 
-void tour_jeux(int taille_grille) {
 
-
-}
-
-void jeux() {
+int jeux() {
 	int hauteur_fenetre = 600;
 	int largeur_fenetre = 800;
 	couleur blue = 3093129;
@@ -649,10 +647,10 @@ void jeux() {
 	couleur white = 14803425;
 	couleur dark_grey = 2697513;
 
-	int enable_IA = 0;
+	int enable_IA = 1;
 	int taille_grille = 8;
 
-	short int quitter_jeux = 0;
+	short int quitter_partie = 0;
 
 	char gagnant;
 
@@ -672,16 +670,19 @@ void jeux() {
 	ChoisirCouleurDessin(orange);
 	EcrireTexte(largeur_fenetre*0.45, hauteur_fenetre*0.08, "Blocus !", 2);
 
-
-	gagnant = debut_jeux(taille_grille);
-	ecran_fin(gagnant);
-
-
-
-	tour_jeux(taille_grille);
-	while(quitter_jeux != 1) {
-
+	if(enable_IA == 0) {
+		gagnant = debut_jeux(taille_grille);
+	} else if(enable_IA == 1) {
+		ia_jeux(taille_grille);
 	}
+
+
+	quitter_partie = ecran_fin(gagnant);
+	if(quitter_partie == 1) {
+		return 1;
+	}
+
+
 }
 
 
