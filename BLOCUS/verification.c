@@ -11,8 +11,6 @@ char verification_victoire(int taille_grille, int case_prise[taille_grille][tail
 		LibererSprite(num_sprite_orange);
 		LibererSprite(num_sprite_bleu);
 		return 'b';
-	} else {
-		return 'n';
 	}
 
 
@@ -20,8 +18,6 @@ char verification_victoire(int taille_grille, int case_prise[taille_grille][tail
 		LibererSprite(num_sprite_orange);
 		LibererSprite(num_sprite_bleu);
 		return 'o';
-	} else {
-		return 'n';
 	}
 
 }

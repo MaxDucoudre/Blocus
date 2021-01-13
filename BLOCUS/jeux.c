@@ -458,7 +458,6 @@ char debut_jeux(int taille_grille) {
 
 		while(placer_bleu == 0) {
 
-
 			cliquee = SourisCliquee();
 			if(cliquee == 1) {
 				if(_X > largeur_fenetre*0.2 && _X < largeur_fenetre*0.2 + (hauteur_fenetre - (hauteur_fenetre*0.2)) && _Y > hauteur_fenetre*0.1 && _Y < hauteur_fenetre*0.1 + hauteur_fenetre - (hauteur_fenetre*0.2)) {
@@ -609,7 +608,7 @@ char debut_jeux(int taille_grille) {
 	if (gagnant == 'o') {
 		return gagnant;
 	}
-		if (gagnant == 'b') {
+	if (gagnant == 'b') {
 		return gagnant;
 	}
 
