@@ -647,7 +647,7 @@ int jeux() {
 	couleur white = 14803425;
 	couleur dark_grey = 2697513;
 
-	int enable_IA = 1;
+	int enable_IA = 0;
 	int taille_grille = 8;
 
 	short int quitter_partie = 0;
