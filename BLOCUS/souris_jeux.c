@@ -1,7 +1,7 @@
 #include<stdlib.h>
 #include<stdio.h>
 #include<graph.h>
-#include<jeux.h>
+#include"jeux.h"
 
 void jeux_hover() {
 
