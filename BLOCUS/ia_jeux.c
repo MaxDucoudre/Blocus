@@ -49,11 +49,15 @@ int charger_pion_ia(int taille_grille, char *couleur_pion) {
 	}
 }
 
-int ia_jeux(int taille_grille) {
+int ia_jeux(int taille_grille, int hard_mod) {
 	int hauteur_fenetre = 600;
 	int largeur_fenetre = 800;
 
 	couleur lite_white = 15592941;
+	couleur orange = 16344064;
+	couleur bleu = 4147404;
+
+
 
 	int num_sprite_bleu, num_sprite_orange;
 
@@ -84,6 +88,7 @@ int ia_jeux(int taille_grille) {
 	int position_x_orange_mur, position_x_bleu_mur;
 	int position_y_orange_mur, position_y_bleu_mur;
 	int case_prise[taille_grille][taille_grille];
+	int coord_largeur_mur_bleu, coord_hauteur_mur_bleu;
 
 	float cote_grille = (hauteur_fenetre-(hauteur_fenetre*0.2));
 	float cote_case = cote_grille/taille_grille;
@@ -147,8 +152,8 @@ int ia_jeux(int taille_grille) {
 	while(placer_bleu == 0) {
 		while(1) {
 
-			coord_largeur_bleu = (rand() % (taille_grille-1 - 0 + 1)) + 0;
-			coord_hauteur_bleu = (rand() % (taille_grille-1 - 0 + 1)) + 0;
+			coord_largeur_bleu = (rand()%(taille_grille-1-0+1))+0;
+			coord_hauteur_bleu = (rand()%(taille_grille-1-0+1))+0;
 
 
 			position_x_bleu = largeur_fenetre*0.2 + coord_largeur_bleu*(cote_grille/taille_grille);
@@ -158,12 +163,12 @@ int ia_jeux(int taille_grille) {
 				break;
 			}
 
-			case_prise[coord_largeur][coord_hauteur] = 1;
+			case_prise[coord_largeur_bleu][coord_hauteur_bleu] = 1;
 
 			AfficherSprite(num_sprite_bleu,position_x_bleu, position_y_bleu);
 
 			placer_bleu = 1;
-			printf("Pion IA placé : %d %d\n", coord_largeur, coord_hauteur_bleu);
+			printf("Pion IA placé : %d %d\n", coord_largeur_bleu, coord_hauteur_bleu);
 			break;
 		}
 	}
@@ -229,6 +234,13 @@ int ia_jeux(int taille_grille) {
 				}
 			}
 		}
+		for(i = 0; i < taille_grille; i++) {
+			printf("\n");
+			for(j = 0; j < taille_grille; j++) {
+				printf("%d ", case_prise[j][i]);
+			}
+		}
+
 
 		gagnant = verification_victoire(taille_grille, case_prise, coord_largeur_orange, coord_hauteur_orange, num_sprite_orange, num_sprite_bleu);
 		if (gagnant == 1) {
@@ -240,6 +252,76 @@ int ia_jeux(int taille_grille) {
 			return 'o';
 		}
 
+		bouton_notification("Placez un mur", 5, "orange");
+		placer_mur_orange = 0;
+		i = 0;
+		while(placer_mur_orange == 0) {	
+
+			cliquee = SourisCliquee();
+			if(cliquee == 1) {
+				if(_X > largeur_fenetre*0.2 && _X < largeur_fenetre*0.2 + (hauteur_fenetre - (hauteur_fenetre*0.2)) && _Y > hauteur_fenetre*0.1 && _Y < hauteur_fenetre*0.1 + hauteur_fenetre - (hauteur_fenetre*0.2)) {
+					for(coord_hauteur = 0; coord_hauteur<taille_grille; coord_hauteur++) {
+
+						for(coord_largeur = 0; coord_largeur<taille_grille; coord_largeur++) {
+
+							if(_X > largeur_fenetre*0.2 + coord_largeur*(cote_grille/taille_grille) && _X < largeur_fenetre*0.2 + (coord_largeur+1)*(cote_grille/taille_grille) && _Y > hauteur_fenetre*0.1 + coord_hauteur*(cote_grille/taille_grille) && _Y < hauteur_fenetre*0.1 + (coord_hauteur+1)*(cote_grille/taille_grille)) {
+
+
+								position_x_orange_mur = largeur_fenetre*0.2 + coord_largeur*(cote_grille/taille_grille);
+								position_y_orange_mur = hauteur_fenetre*0.1 + coord_hauteur*(cote_grille/taille_grille);
+
+								if(position_x_orange_mur == position_x_orange && position_y_orange_mur == position_y_orange) {
+									bouton_notification("Placez un mur : Impossible sur vous-meme", 5, "orange");
+									puts("Choisissez une autre case");
+									break;
+								}
+
+								if(position_x_orange_mur == position_x_bleu && position_y_orange_mur == position_y_bleu) {
+									bouton_notification("Placez un mur : Impossible sur un pion", 5, "orange");
+									break;
+								}
+
+								if(case_prise[coord_largeur][coord_hauteur] == 1) {
+									bouton_notification("Placez un mur : Il y a deja un mur ici", 5, "orange");
+									break;
+								}
+
+								ChoisirCouleurDessin(orange);
+								RemplirRectangle(position_x_orange_mur+1,position_y_orange_mur+1,cote_grille/taille_grille-1,cote_grille/taille_grille-1);
+								placer_mur_orange = 1;
+								case_prise[coord_largeur][coord_hauteur] = 1;	
+
+
+								for(i = 0; i < taille_grille; i++) {
+									printf("\n");
+									for(j = 0; j < taille_grille; j++) {
+										printf("%d ", case_prise[j][i]);
+
+									}
+								}
+								printf("\n");
+
+
+							}
+						}
+					}
+					if(placer_mur_orange == 1) {
+						break;
+					}
+				}
+			}
+		}
+
+
+		gagnant = verification_victoire(taille_grille, case_prise, coord_largeur_orange, coord_hauteur_orange, num_sprite_orange, num_sprite_bleu);
+		if (gagnant == 1) {
+			return 'b';
+		}
+
+		gagnant = verification_victoire(taille_grille, case_prise, coord_largeur_bleu, coord_hauteur_bleu, num_sprite_orange, num_sprite_bleu);
+		if (gagnant == 1) {
+			return 'o';
+		}
 
 
 		bouton_notification("Tour de l'IA...", 20, "bleu");
@@ -255,10 +337,11 @@ int ia_jeux(int taille_grille) {
 					ancienne_coord_hauteur_bleu = coord_hauteur_bleu; 
 				}
 				i = 1;
-				coord_largeur_bleu = (rand() % (taille_grille+1 - 0 + 1)) + 0;
-				coord_hauteur_bleu = (rand() % (taille_grille+1 - 0 + 1)) + 0;
+				coord_largeur_bleu = (rand()%(taille_grille-1-0+1))+0;
+				coord_hauteur_bleu = (rand()%(taille_grille-1-0+1))+0;
 
-				if (coord_largeur_bleu >= taille_grille || coord_largeur_bleu < 0 || coord_hauteur_bleu >= taille_grille || coord_hauteur < 0) {
+				printf("L'IA tente de se déplacer : %d %d...\n", coord_largeur_bleu, coord_hauteur_bleu);
+				if (coord_largeur_bleu >= taille_grille || coord_largeur_bleu < 0 || coord_hauteur_bleu >= taille_grille || coord_hauteur_bleu < 0) {
 					puts("L'IA tente de se déplacer hors des limites de la grille");
 					break;
 				}
@@ -273,29 +356,123 @@ int ia_jeux(int taille_grille) {
 
 				if(coord_largeur_bleu == ancienne_coord_largeur_bleu && coord_hauteur_bleu == ancienne_coord_hauteur_bleu) {
 					puts("L'IA tente de se déplacer sur elle-même");					
-
 					break;
 				}
 
 				if(case_prise[coord_largeur_bleu][coord_hauteur_bleu] == 1) {
+					puts("L'IA tente de se déplacer sur un mur");	
 					break;	
-					puts("L'IA tente de se déplacer sur un mur");							
+
 				}
 
-				if(ancienne_coord_hauteur_bleu == coord_largeur_bleu-1 && ancienne_coord_hauteur_bleu == coord_hauteur_bleu+1 || ancienne_coord_largeur_bleu == coord_largeur_bleu && ancienne_coord_hauteur_bleu == coord_hauteur_bleu-1 || ancienne_coord_largeur_bleu == coord_largeur_bleu && ancienne_coord_hauteur_bleu == coord_hauteur_bleu+1 || ancienne_coord_largeur_bleu == coord_largeur_bleu-1 && ancienne_coord_hauteur_bleu == coord_hauteur_bleu-1 || ancienne_coord_largeur_bleu == coord_largeur_bleu+1 && ancienne_coord_hauteur_bleu == coord_hauteur_bleu || ancienne_coord_largeur_bleu == coord_largeur_bleu+1 && ancienne_coord_hauteur_bleu == coord_hauteur_bleu+1 || ancienne_coord_largeur_bleu == coord_largeur_bleu+1 && ancienne_coord_hauteur_bleu == coord_hauteur_bleu-1 || ancienne_coord_largeur_bleu == coord_largeur_bleu-1 && ancienne_coord_hauteur_bleu == coord_hauteur_bleu || ancienne_coord_largeur_bleu == coord_largeur_bleu-1 && ancienne_coord_hauteur_bleu == coord_hauteur_bleu-1) {
+
+				if(coord_largeur_bleu == ancienne_coord_largeur_bleu-1 && coord_hauteur_bleu == ancienne_coord_hauteur_bleu+1 || coord_largeur_bleu == ancienne_coord_largeur_bleu && coord_hauteur_bleu == ancienne_coord_hauteur_bleu-1 || coord_largeur_bleu == ancienne_coord_largeur_bleu && coord_hauteur_bleu == ancienne_coord_hauteur_bleu+1 || coord_largeur_bleu == ancienne_coord_largeur_bleu-1 && coord_hauteur_bleu == ancienne_coord_hauteur_bleu-1 || coord_largeur_bleu == ancienne_coord_largeur_bleu+1 && coord_hauteur_bleu == ancienne_coord_hauteur_bleu || coord_largeur_bleu == ancienne_coord_largeur_bleu+1 && coord_hauteur_bleu == ancienne_coord_hauteur_bleu+1 || coord_largeur_bleu == ancienne_coord_largeur_bleu+1 && coord_hauteur_bleu == ancienne_coord_hauteur_bleu-1 || coord_largeur_bleu == ancienne_coord_largeur_bleu-1 && coord_hauteur_bleu == ancienne_coord_hauteur_bleu || coord_largeur_bleu == ancienne_coord_largeur_bleu-1 && coord_hauteur_bleu == ancienne_coord_hauteur_bleu-1) { 
 					ChoisirCouleurDessin(lite_white);
 					RemplirRectangle(ancienne_pos_x_bleu+1,ancienne_pos_y_bleu+1,cote_grille/taille_grille-1,cote_grille/taille_grille-1);
 					AfficherSprite(num_sprite_bleu,position_x_bleu, position_y_bleu);
 					case_prise[ancienne_coord_largeur_bleu][ancienne_coord_hauteur_bleu] = 0;
 					case_prise[coord_largeur_bleu][coord_hauteur_bleu] = 1;
 					placer_bleu = 1;
+					puts("Déplacement réussi!");
+					printf("Ancienne position IA : %d %d\n", ancienne_coord_largeur_bleu, ancienne_coord_hauteur_bleu);
+					printf("Nouvelle position IA : %d %d\n", coord_largeur_bleu, coord_hauteur_bleu);
+					break;					
+				}
 
-					printf("Ancienne position IA : %d %d\n", coord_largeur_orange, coord_hauteur_orange);
-					printf("         Position IA : %d %d\n\n", coord_largeur, coord_hauteur);
+
+
+				puts("L'IA se déplace trop loin !");
+				bouton_notification("L'IA reflechit", 20, "bleu");
+			}
+		}
+
+		gagnant = verification_victoire(taille_grille, case_prise, coord_largeur_orange, coord_hauteur_orange, num_sprite_orange, num_sprite_bleu);
+		if (gagnant == 1) {
+			return 'b';
+		}
+
+		gagnant = verification_victoire(taille_grille, case_prise, coord_largeur_bleu, coord_hauteur_bleu, num_sprite_orange, num_sprite_bleu);
+		if (gagnant == 1) {
+			return 'o';
+		}
+
+
+		for(i = 0; i < taille_grille; i++) {
+			printf("\n");
+			for(j = 0; j < taille_grille; j++) {
+				printf("%d ", case_prise[j][i]);
+			}
+		}
+
+		printf("\n");
+
+
+
+		bouton_notification("L'IA place son mur", 5, "bleu");
+		placer_mur_bleu = 0;
+		i = 0;
+		while(placer_mur_bleu == 0) {
+			while(1) {
+
+				if(hard_mod == 1) {
+					coord_largeur_mur_bleu = (rand() % ((coord_largeur_orange+1) - (coord_largeur_orange-1) + 1)) + (coord_largeur_orange-1);
+					coord_hauteur_mur_bleu = (rand() % ((coord_hauteur_orange+1) - (coord_hauteur_orange-1) + 1)) + (coord_hauteur_orange-1);
+
+				} else if(hard_mod != 1) {
+					coord_largeur_mur_bleu = (rand()%(taille_grille-1-0+1))+0;
+					coord_hauteur_mur_bleu = (rand()%(taille_grille-1-0+1))+0;
+				}
+
+
+
+				printf("L'IA tente de mettre un mur : %d %d...\n", coord_largeur_mur_bleu, coord_hauteur_mur_bleu);
+
+				if(coord_largeur_mur_bleu >= taille_grille || coord_largeur_mur_bleu < 0 || coord_hauteur_mur_bleu >= taille_grille || coord_hauteur_mur_bleu < 0) {
+					puts("L'IA tente de mettre un mur en dehors de la grille");
 					break;
 				}
-				bouton_notification("L'IA réfléchit...", 20, "bleu");
+
+				if(position_x_bleu_mur == position_x_orange && position_y_bleu_mur == position_y_orange) {
+					puts("L'IA tente de mettre un mur sur le joueur");
+					break;
+				}
+
+				if(position_x_bleu_mur == position_x_bleu && position_y_bleu_mur == position_y_bleu) {
+					puts("L'IA tente de mettre un mur sur elle-même");
+					break;
+				}
+
+				if(case_prise[coord_largeur_mur_bleu][coord_hauteur_mur_bleu] == 1) {
+					puts("L'IA tente de mettre un mur sur un autre mur");
+					break;
+				}
+
+
+				position_x_bleu_mur = largeur_fenetre*0.2 + coord_largeur_mur_bleu*(cote_grille/taille_grille);
+				position_y_bleu_mur = hauteur_fenetre*0.1 + coord_hauteur_mur_bleu*(cote_grille/taille_grille);
+
+
+				ChoisirCouleurDessin(bleu);
+				RemplirRectangle(position_x_bleu_mur+1,position_y_bleu_mur+1,cote_grille/taille_grille-1,cote_grille/taille_grille-1);
+				placer_mur_bleu = 1;
+				case_prise[coord_largeur_mur_bleu][coord_hauteur_mur_bleu] = 1;	
+
+				break;
 			}
+		}
+
+
+
+		
+
+		gagnant = verification_victoire(taille_grille, case_prise, coord_largeur_orange, coord_hauteur_orange, num_sprite_orange, num_sprite_bleu);
+		if (gagnant == 1) {
+			return 'b';
+		}
+
+		gagnant = verification_victoire(taille_grille, case_prise, coord_largeur_bleu, coord_hauteur_bleu, num_sprite_orange, num_sprite_bleu);
+		if (gagnant == 1) {
+			return 'o';
 		}
 
 
