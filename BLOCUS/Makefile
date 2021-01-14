@@ -1,6 +1,6 @@
 OBJS	= options.o grille.o jeux.o main.o souris_jeux.o ia_jeux.o menu.o verification.o bouton.o
 SRC	= %(willcard*.c)
-HEADER	= 
+
 OUT	= blocus
 CC	 = gcc	
 FLAGS	 = -g -c 
