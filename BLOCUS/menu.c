@@ -3,9 +3,11 @@
 #include<graph.h>
 #include"options.h"
 #include"bouton.h"
+#include"jeux.h"
 
 
-short int menu() {
+
+short int menu(int i, struct parametres o) {
 	short int lancer_partie = 0;
 	short int lancer_menu = 1;
 	short int options = 0;
@@ -44,7 +46,8 @@ short int menu() {
 				lancer_partie = bouton_clique("Lancer la partie", 3);
 				if (lancer_partie == 1) {
 					printf("Lancer la partie\n");
-					return 1;
+					jeux(o);
+					return 0;
 				}
 
 			/* statistiques */
@@ -58,7 +61,8 @@ short int menu() {
 				options = bouton_clique("Options", 5); 
 				if (options == 1) {
 					printf("Options\n");
-					menu_options();
+					o = menu_options(i, o);
+					i=1;
 					lancer_bouton = 0;
 				}
 			/*
@@ -68,11 +72,9 @@ short int menu() {
 				quitter = bouton_clique("Quitter", 8);
 				if (quitter == 1) {
 					printf("Quitter\n");
-					CacherFenetre();
-					Touche();
-					FermerGraphique();
 
-					return EXIT_SUCCESS;
+
+					return 2;
 				}
 			}
 		} while(lancer_bouton == 1);

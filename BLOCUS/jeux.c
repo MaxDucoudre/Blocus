@@ -1,11 +1,12 @@
-		#include<stdlib.h>
-		#include<stdio.h>
-		#include<graph.h>
-		#include"grille.h"
-		#include"souris_jeux.h"
-		#include"verification.h"
-		#include"ia_jeux.h"
-		#include<unistd.h>
+#include<stdlib.h>
+#include<stdio.h>
+#include<graph.h>
+#include"grille.h"
+#include"souris_jeux.h"
+#include"verification.h"
+#include"ia_jeux.h"
+#include<unistd.h>
+#include"options.h"
 
 
 
@@ -226,6 +227,7 @@ char debut_jeux(int taille_grille) {
 			printf("%d ", case_prise[j][i]);
 		}
 	}
+
 	printf("\n");
 
 
@@ -240,6 +242,7 @@ char debut_jeux(int taille_grille) {
 
 				for(coord_hauteur = 0; coord_hauteur<taille_grille; coord_hauteur++) {
 					for(coord_largeur = 0; coord_largeur<taille_grille; coord_largeur++) {
+
 						if(_X > largeur_fenetre*0.2 + coord_largeur*(cote_grille/taille_grille) && _X < largeur_fenetre*0.2 + (coord_largeur+1)*(cote_grille/taille_grille) && _Y > hauteur_fenetre*0.1 + coord_hauteur*(cote_grille/taille_grille) && _Y < hauteur_fenetre*0.1 + (coord_hauteur+1)*(cote_grille/taille_grille)) {
 							printf("Pion placé : %d %d\n", coord_largeur+1, coord_hauteur+1);
 							position_x_orange = largeur_fenetre*0.2 + coord_largeur*(cote_grille/taille_grille);
@@ -299,9 +302,6 @@ char debut_jeux(int taille_grille) {
 
 	fin_partie = 0;
 	while(fin_partie == 0) {
-
-
-
 
 			/* Deplacement */
 		bouton_notification("Tour d'orange : Bougez votre tour", 5, "orange");
@@ -531,10 +531,7 @@ char debut_jeux(int taille_grille) {
 									break;
 								}
 
-
 								bouton_notification("Tour de bleu : Bougez d'une case maximum", 5, "bleu");
-
-
 
 							}
 						}
@@ -636,7 +633,7 @@ char debut_jeux(int taille_grille) {
 }
 
 
-int jeux() {
+int jeux(struct parametres o) {
 	int hauteur_fenetre = 600;
 	int largeur_fenetre = 800;
 	couleur blue = 3093129;
@@ -647,24 +644,20 @@ int jeux() {
 	couleur white = 14803425;
 	couleur dark_grey = 2697513;
 
-	int enable_IA = 0;
-	int taille_grille = 8;
+	int enable_IA;
+	int taille_grille;
+	int hard_mod;
 
 	short int quitter_partie = 0;
 
 	char gagnant;
 
-			/*
-			FILE* flux;
-			printf("%d\n", enable_IA);
+	printf("Taille : %d | IA : %d | HardMod: %d\n", o.grille, o.ia, o.hard);
 
-			flux = fopen("options", "r");
-			fread(&enable_IA, sizeof(int), 1, flux);
+	taille_grille = o.grille;
+	enable_IA = o.ia;
+	hard_mod = o.hard;
 
-			printf("%d\n", enable_IA);
-			
-			fclose(flux);
-			*/
 
 	ChargerImageFond("image/muraille.jpg");
 	ChoisirCouleurDessin(orange);
@@ -673,7 +666,7 @@ int jeux() {
 	if(enable_IA == 0) {
 		gagnant = debut_jeux(taille_grille);
 	} else if(enable_IA == 1) {
-		ia_jeux(taille_grille);
+		gagnant = ia_jeux(taille_grille, hard_mod);
 	}
 
 
