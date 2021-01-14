@@ -1,22 +1,40 @@
-NAME = Blocus
-SRC = menu.c \
-options.c \
-bouton.c \
-main.c
+OBJS = options.o grille.o jeux.o main.o souris_jeux.o ia_jeux.o menu.o verification.o bouton.o
+SRC	= %(willcard*.c)
+OUT	= a.out
+CC = gcc
+FLAGS = -g -c -Wall -lgrpah
 
-OBJ = $(SRC:%.c=%.o)
-RM = rm -f
+all: $(OBJS)
+	$(CC) -g $(OBJS) -o $(OUT) $(LFLAGS)
+
+options.o: options.c
+	$(CC) $(FLAGS) options.c 
+
+grille.o: grille.c
+	$(CC) $(FLAGS) grille.c 
+
+jeux.o: jeux.c
+	$(CC) $(FLAGS) jeux.c 
+
+main.o: main.c
+	$(CC) $(FLAGS) main.c 
+
+souris_jeux.o: souris_jeux.c
+	$(CC) $(FLAGS) souris_jeux.c 
+
+ia_jeux.o: ia_jeux.c
+	$(CC) $(FLAGS) ia_jeux.c 
+
+menu.o: menu.c
+	$(CC) $(FLAGS) menu.c 
+
+verification.o: verification.c
+	$(CC) $(FLAGS) verification.c 
+
+bouton.o: bouton.c
+	$(CC) $(FLAGS) bouton.c 
+
+clean:
+	rm -f $(OBJS) $(OUT)
 
 
-all: $(NAME)
-
-$(NAME): $(OBJ)
-    gcc $(OBJ) -o $(NAME) -lgraph
-
-clean: $(RM) $(OBJ)
-
-fclean: clean $(RM) $(NAME)
-
-re: fclean all
-
-.PHONY: all clean fclean re
