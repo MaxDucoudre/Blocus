@@ -1,11 +1,13 @@
-OBJS = options.o grille.o jeux.o main.o souris_jeux.o ia_jeux.o menu.o verification.o bouton.o
+OBJS	= options.o grille.o jeux.o main.o souris_jeux.o ia_jeux.o menu.o verification.o bouton.o
 SRC	= %(willcard*.c)
-OUT	= a.out
-CC = gcc
-FLAGS = -g -c -Wall -lgrpah
+HEADER	= 
+OUT	= blocus
+CC	 = gcc	
+FLAGS	 = -g -c 
+LFLAGS	 = 
 
 all: $(OBJS)
-	$(CC) -g $(OBJS) -o $(OUT) $(LFLAGS)
+	$(CC) -g $(OBJS) -o $(OUT) $(LFLAGS) -lgraph
 
 options.o: options.c
 	$(CC) $(FLAGS) options.c 
@@ -34,7 +36,6 @@ verification.o: verification.c
 bouton.o: bouton.c
 	$(CC) $(FLAGS) bouton.c 
 
+
 clean:
-	rm -f $(OBJS) $(OUT)
-
-
+	rm -f $(OBJS) $(OUT) 
