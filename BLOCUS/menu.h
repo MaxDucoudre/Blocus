@@ -2,6 +2,6 @@
 #define MENU_H
 
 
-short int menu();
+short int menu(int i, struct parametres o);
 
 #endif
