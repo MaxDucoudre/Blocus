@@ -42,7 +42,7 @@ struct parametres menu_options(int i, struct parametres o) {
 
 
 
-		ChargerImageFond("image/background/menu_option.png");
+		ChargerImageFond("image/menu_option.png");
 
 		intelligence_artificielle();
 		dessiner_enable_ia(enable_IA);
