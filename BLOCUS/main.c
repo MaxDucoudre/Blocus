@@ -37,7 +37,7 @@ int main(void) {
 		if(_X > 0 && _X < 60 && _Y > 0 && _Y < 80) {
 			ChargerImageFond("image/init2.png");
 		} else {
-			ChargerImageFond("image/background/init1.png");
+			ChargerImageFond("image/init1.png");
 		}	
 
 
