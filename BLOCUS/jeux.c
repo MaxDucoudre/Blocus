@@ -13,8 +13,8 @@
 int charger_pion(int taille_grille, char *couleur_pion) {
 	char caractere_taille_grille;
 	char sprite_num;
-	char sprite_bleu[19] = "sprite/bleu3.png";
-	char sprite_orange[19] = "sprite/orange3.png";
+	char sprite_bleu[19] = "sprite/blue3.png";
+	char sprite_orange[19] = "sprite/yellow3.png";
 
 	int i;
 
@@ -57,28 +57,27 @@ void bouton_notification(char *texte, int decalage, char *color) {
 	int hauteur_fenetre = 600;
 	int largeur_fenetre = 800;
 
-	couleur blue = 3093129;
-	couleur orange = 16344064;
+	couleur dark_blue = 4733;
+	couleur bleu = 28647;
+	couleur orange = 15182181;
 	couleur red = 850606;
 	couleur lite_black = 2039583;
 	couleur grey = 7697781;
 
 
-	ChoisirCouleurDessin(grey);
-	RemplirRectangle(largeur_fenetre*0.20, hauteur_fenetre*0.92, 480, 40);
+	ChoisirCouleurDessin(dark_blue);
+	RemplirRectangle(largeur_fenetre*0.20, hauteur_fenetre*0.92+3, 480, 20);
 
-	ChoisirCouleurDessin(lite_black);
-	DessinerRectangle(largeur_fenetre*0.20, hauteur_fenetre*0.92, 480, 40);
+
 
 	if(color == "bleu") {
-		ChoisirCouleurDessin(blue);
+		ChoisirCouleurDessin(bleu);
 	} else if (color == "orange") {
 		ChoisirCouleurDessin(orange);
-	} else if (color == "rouge") {
-		ChoisirCouleurDessin(red);
 	}
 
-	EcrireTexte(largeur_fenetre*0.25 + decalage, hauteur_fenetre*0.965, texte, 1);
+	ChoisirCouleurDessin(orange);
+	EcrireTexte(largeur_fenetre*0.25 + decalage, hauteur_fenetre*0.950, texte, 1);
 
 }
 
@@ -87,22 +86,25 @@ void bouton_notification(char *texte, int decalage, char *color) {
 int ecran_fin(char gagnant) {
 	int hauteur_fenetre = 600;
 	int largeur_fenetre = 800;
+	couleur blue = 4363775;
+	couleur orange = 16501922;
+	couleur red = 850606;
 	couleur grey = 7697781;
 	couleur lite_black = 2039583;
+	couleur lite_white = 15592941;
 	couleur white = 14803425;
-	couleur blue = 3093129;
-	couleur orange = 16344064;
-	int num_v_o,num_d_b;
-	int num_v_b,num_d_o;
+	couleur dark_grey = 2697513;
+	couleur black = 0;
+	couleur pink = 14200534;	
+
+	int num_sprite_orange, num_sprite_bleu;
+
+	int num_fin;
 	int cliquee;
 
 	short int quitter_ecran_fin;
 
-	ChoisirCouleurDessin(grey);
-	RemplirRectangle(largeur_fenetre*0.15, hauteur_fenetre*0.03, 560, 42);
-	ChoisirCouleurDessin(lite_black);
-	DessinerRectangle(largeur_fenetre*0.15-1, hauteur_fenetre*0.03-1, 560+1, 42+1);
-	DessinerRectangle(largeur_fenetre*0.15-2, hauteur_fenetre*0.03-2, 560+3, 42+3);
+
 
 
 			/*
@@ -117,53 +119,87 @@ int ecran_fin(char gagnant) {
 
 	if(gagnant == 'o') {
 		ChoisirCouleurDessin(orange);
-		EcrireTexte(largeur_fenetre*0.15+24, hauteur_fenetre*0.08, "La victoire est au Royaume Orange !", 2);
 
-		num_v_o = ChargerSprite("image/victoire_orange.png");
-		AfficherSprite(num_v_o, 250, 110);
+		num_fin = ChargerSprite("image/fin.png");
+		AfficherSprite(num_fin, 200, 170);
 
-		num_d_b = ChargerSprite("image/defaite_bleu.png");
-		AfficherSprite(num_d_b, 500, 380);	
+		num_sprite_orange = ChargerSprite("sprite/yellow3.png");
+		AfficherSprite(num_sprite_orange, 600, 50);
 
-		LibererSprite(num_d_b);
-		LibererSprite(num_v_o);
+
+		EcrireTexte(largeur_fenetre*0.20+5+90, hauteur_fenetre*0.60-100, "Le Soleil se leve sur l'horizon", 1);
+
+		LibererSprite(num_fin);
+		LibererSprite(num_sprite_orange);
 
 
 	} else if(gagnant == 'b') {
 		ChoisirCouleurDessin(blue);
-		EcrireTexte(largeur_fenetre*0.15+27, hauteur_fenetre*0.08, "La victoire est au Royaume Bleu !", 2);
 
-		num_v_b = ChargerSprite("image/victoire_bleu.png");
-		AfficherSprite(num_v_b, 250, 110);
+		num_fin = ChargerSprite("image/fin.png");
+		AfficherSprite(num_fin, 200, 170);
 
-		num_d_o = ChargerSprite("image/defaite_orange.png");
-		AfficherSprite(num_d_o, 500, 380);	
+		num_sprite_bleu = ChargerSprite("sprite/blue3.png");
+		AfficherSprite(num_sprite_bleu, 600, 50);
 
-		LibererSprite(num_d_o);
-		LibererSprite(num_v_b);
+		ChoisirCouleurDessin(black);
+		EcrireTexte(largeur_fenetre*0.20+5+90, hauteur_fenetre*0.60-100, "La Lune se leve sur l'horizon", 1);
+
+
+		LibererSprite(num_fin);
+		LibererSprite(num_sprite_bleu);
+
 	}
 
-	bouton_notification("Quitter la partie", 130, "rouge");
-	do {
+
+	ChoisirCouleurDessin(black);
+	EcrireTexte(largeur_fenetre*0.20+5+90, hauteur_fenetre*0.60-20, "Menu", 2);
+
+	ChoisirCouleurDessin(black);
+	EcrireTexte(largeur_fenetre*0.20+240+35, hauteur_fenetre*0.60-20, "Restart", 2);
+
+
+
+	
+
+
+	while(quitter_ecran_fin != 1) {
 		SourisPosition();
-		if(_X > largeur_fenetre*0.20 && _X < largeur_fenetre*0.20 + 480 && _Y > hauteur_fenetre*0.92 && _Y < hauteur_fenetre*92 + 40) {
-			ChoisirCouleurDessin(white);
-			DessinerRectangle(largeur_fenetre*0.20, hauteur_fenetre*0.92, 480, 40);
+		if(_X > 210 && _X < 390 && _Y > 308 && _Y < 350) {
+			ChoisirCouleurDessin(lite_white);
+			EcrireTexte(largeur_fenetre*0.20+5+90, hauteur_fenetre*0.60-20, "Menu", 2);
 		} else {
-			ChoisirCouleurDessin(lite_black);
-			DessinerRectangle(largeur_fenetre*0.20, hauteur_fenetre*0.92, 480, 40);
+			ChoisirCouleurDessin(black);
+			EcrireTexte(largeur_fenetre*0.20+5+90, hauteur_fenetre*0.60-20, "Menu", 2);
 		}
+
+
+		if(_X > 400 && _X < 580 && _Y > 308 && _Y < 350) {
+			ChoisirCouleurDessin(lite_white);
+			EcrireTexte(largeur_fenetre*0.20+240+35, hauteur_fenetre*0.60-20, "Restart", 2);
+
+		} else {
+			ChoisirCouleurDessin(black);
+			EcrireTexte(largeur_fenetre*0.20+240+35, hauteur_fenetre*0.60-20, "Restart", 2);
+
+		}
+
 		cliquee = SourisCliquee();
 		if(cliquee == 1) {
-			if(_X > largeur_fenetre*0.20 && _X < largeur_fenetre*0.20 + 480 && _Y > hauteur_fenetre*0.92 && _Y < hauteur_fenetre*92 + 40) {
-				puts("Quitter la partie");
+			if(_X > 210 && _X < 390 && _Y > 308 && _Y < 350) {
+				puts("Quitter");
 				return 1;
 			}
-		}
+			if(_X > 400 && _X < 580 && _Y > 308 && _Y < 350) {
+				puts("Relancer");
+				return 0;
+			}
 
-	} while(quitter_ecran_fin != 1);
+		} 
 
-}
+	}
+} 
+
 
 
 
@@ -192,8 +228,8 @@ char debut_jeux(int taille_grille) {
 	int bleu_defaite = 0;
 	int gagnant = 0;
 
-	couleur orange = 16344064;
-	couleur bleu = 4147404;
+	couleur bleu = 28647;
+	couleur orange = 15182181;
 
 	short int fin_partie = 0;
 
@@ -234,7 +270,7 @@ char debut_jeux(int taille_grille) {
 	fflush(0);
 
 
-	bouton_notification("Tour d'orange : Placer votre pion", 5, "orange");
+	bouton_notification("Soleil : doit se placer", 5, "orange");
 	while(placer_orange == 0) {
 		cliquee = SourisCliquee();
 		if(cliquee == 1) {
@@ -265,7 +301,7 @@ char debut_jeux(int taille_grille) {
 	}
 
 
-	bouton_notification("Tour de bleu : placer votre pion", 5, "bleu");
+	bouton_notification("Lune : doit se placer", 5, "bleu");
 
 	while(placer_bleu == 0) {
 		cliquee = SourisCliquee();
@@ -280,7 +316,7 @@ char debut_jeux(int taille_grille) {
 							position_y_bleu = hauteur_fenetre*0.1 + coord_hauteur*(cote_grille/taille_grille);
 
 							if(position_y_bleu == position_y_orange && position_x_bleu == position_x_orange) {
-								bouton_notification("Tour de bleu : la case est prise", 20, "bleu");
+								bouton_notification("Lune : La case est prise, placez-vous ailleurs", 20, "bleu");
 								break;
 							}
 
@@ -304,7 +340,7 @@ char debut_jeux(int taille_grille) {
 	while(fin_partie == 0) {
 
 			/* Deplacement */
-		bouton_notification("Tour d'orange : Bougez votre tour", 5, "orange");
+		bouton_notification("Soleil : deplacez-vous...", 5, "orange");
 		placer_orange = 0;
 		i = 0;
 		while(placer_orange == 0) {
@@ -333,15 +369,15 @@ char debut_jeux(int taille_grille) {
 
 
 								if(position_x_orange == position_x_bleu && position_y_orange == position_y_bleu) {
-									bouton_notification("Tour d'orange : La case est prise", 5, "orange");
+									bouton_notification("Soleil : la case est prise", 5, "orange");
 									break;
 								}
 								if(position_x_orange == ancienne_pos_x_orange && position_y_orange == ancienne_pos_y_orange) {
-									bouton_notification("Tour d'orange : Vous devez vous deplacer", 5, "orange");
+									bouton_notification("Soleil : Vous devez vous deplacer autour de vous", 5, "orange");
 									break;
 								}
 								if(case_prise[coord_largeur][coord_hauteur] == 1) {
-									bouton_notification("Tour d'orange : Deplacez-vous en dehors d'un mur", 5, "orange");
+									bouton_notification("Soleil : Deplacez-vous en dehors d'un mur", 5, "orange");
 									break;									
 								}
 
@@ -366,7 +402,7 @@ char debut_jeux(int taille_grille) {
 								}
 
 
-								bouton_notification("Tour d'Orange : Bougez d'une case maximum", 5, "orange");
+								bouton_notification("Soleil : Deplacez-vous d'une case maximum", 5, "orange");
 								break;
 
 
@@ -394,7 +430,7 @@ char debut_jeux(int taille_grille) {
 		}
 
 
-		bouton_notification("Tour de Orange : Placer un mur", 5, "orange");
+		bouton_notification("Soleil : placez un mur", 5, "orange");
 		placer_mur_orange = 0;
 		i = 0;
 		while(placer_mur_orange == 0) {	
@@ -413,18 +449,18 @@ char debut_jeux(int taille_grille) {
 								position_y_orange_mur = hauteur_fenetre*0.1 + coord_hauteur*(cote_grille/taille_grille);
 
 								if(position_x_orange_mur == position_x_orange && position_y_orange_mur == position_y_orange) {
-									bouton_notification("Tour de orange : choisissez une case sans tour", 5, "orange");
+									bouton_notification("Soleil : choisissez une case vide", 5, "orange");
 									puts("Choisissez une autre case");
 									break;
 								}
 
 								if(position_x_orange_mur == position_x_bleu && position_y_orange_mur == position_y_bleu) {
-									bouton_notification("Tour de orange : choisissez une case sans tour", 5, "orange");
+									bouton_notification("Soleil : choisissez une case vide", 5, "orange");
 									break;
 								}
 
 								if(case_prise[coord_largeur][coord_hauteur] == 1) {
-									bouton_notification("Tour de orange : Choisissez une case sans mur", 5, "orange");
+									bouton_notification("Soleil : choisissez une case vide", 5, "orange");
 									puts("Choisissez une autre case");
 									break;
 								}
@@ -456,7 +492,7 @@ char debut_jeux(int taille_grille) {
 		}
 
 
-		
+
 		gagnant = verification_victoire(taille_grille, case_prise, coord_largeur_orange, coord_hauteur_orange, num_sprite_orange, num_sprite_bleu);
 		if (gagnant == 1) {
 			return 'b';
@@ -469,7 +505,7 @@ char debut_jeux(int taille_grille) {
 
 
 
-		bouton_notification("Tour de bleu : Bougez votre tour", 5, "bleu");
+		bouton_notification("Lune : deplacez-vous", 5, "bleu");
 		placer_bleu = 0;
 		i = 0;
 
@@ -500,16 +536,16 @@ char debut_jeux(int taille_grille) {
 
 
 								if(position_x_bleu == position_x_orange && position_y_bleu == position_y_orange) {
-									bouton_notification("Tour de bleu : La case est prise", 5, "bleu");
+									bouton_notification("Lune : la case est prise", 5, "bleu");
 									break;
 								}
 								if(position_x_bleu == ancienne_pos_x_bleu && position_y_bleu == ancienne_pos_y_bleu) {
-									bouton_notification("Tour de bleu : Vous devez vous deplacer", 5, "bleu");
+									bouton_notification("Lune : vous devez vous deplacer", 5, "bleu");
 									break;
 								}
 
 								if(case_prise[coord_largeur][coord_hauteur] == 1) {
-									bouton_notification("Tour de bleu : Choisissez une case sans mur", 5, "bleu");
+									bouton_notification("Lune : deplacez-vous sur une case vide", 5, "bleu");
 									break;									
 								}
 
@@ -531,7 +567,7 @@ char debut_jeux(int taille_grille) {
 									break;
 								}
 
-								bouton_notification("Tour de bleu : Bougez d'une case maximum", 5, "bleu");
+								bouton_notification("Lune : deplacez-vous d'une case au maximum", 5, "bleu");
 
 							}
 						}
@@ -560,7 +596,7 @@ char debut_jeux(int taille_grille) {
 
 
 
-		bouton_notification("Tour de bleu : placer un mur", 5, "bleu");
+		bouton_notification("Lune : placez un mur", 5, "bleu");
 		placer_mur_bleu = 0;
 		i = 0;
 		while(placer_mur_bleu == 0) {	
@@ -579,18 +615,18 @@ char debut_jeux(int taille_grille) {
 
 
 								if(position_x_bleu_mur == position_x_orange && position_y_bleu_mur == position_y_orange) {
-									bouton_notification("Tour de orange : choisissez une case sans tour", 5, "bleu");
+									bouton_notification("Lune : choisissez une case sans le soleil", 5, "bleu");
 									puts("Choisissez une autre case");
 									break;
 								}
 
 								if(position_x_bleu_mur == position_x_bleu && position_y_bleu_mur == position_y_bleu) {
-									bouton_notification("Tour de orange : choisissez une case sans tour", 5, "bleu");
+									bouton_notification("Lune : choisissez une case vide", 5, "bleu");
 									break;
 								}
 
 								if(case_prise[coord_largeur][coord_hauteur] == 1) {
-									bouton_notification("Tour de orange : choisissez une autre case", 5, "bleu");
+									bouton_notification("Lune : choisissez une case vide", 5, "bleu");
 									puts("Choisissez une autre case");
 									break;
 								}
@@ -633,6 +669,8 @@ char debut_jeux(int taille_grille) {
 }
 
 
+
+
 int jeux(struct parametres o) {
 	int hauteur_fenetre = 600;
 	int largeur_fenetre = 800;
@@ -659,21 +697,22 @@ int jeux(struct parametres o) {
 	hard_mod = o.hard;
 
 
-	ChargerImageFond("image/muraille.jpg");
-	ChoisirCouleurDessin(orange);
-	EcrireTexte(largeur_fenetre*0.45, hauteur_fenetre*0.08, "Blocus !", 2);
+	do {
 
-	if(enable_IA == 0) {
-		gagnant = debut_jeux(taille_grille);
-	} else if(enable_IA == 1) {
-		gagnant = ia_jeux(taille_grille, hard_mod);
-	}
+		ChargerImageFond("image/fond_jeu.png");
 
 
-	quitter_partie = ecran_fin(gagnant);
-	if(quitter_partie == 1) {
-		return 1;
-	}
+		if(enable_IA == 0) {
+			gagnant = debut_jeux(taille_grille);
+		} else if(enable_IA == 1) {
+			gagnant = ia_jeux(taille_grille, hard_mod);
+		}
+
+		quitter_partie = ecran_fin(gagnant);
+		if(quitter_partie == 1) {
+			return 1;
+		}
+	} while(1);
 
 
 }

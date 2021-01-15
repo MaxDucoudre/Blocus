@@ -9,8 +9,8 @@
 int charger_pion_ia(int taille_grille, char *couleur_pion) {
 	char caractere_taille_grille;
 	char sprite_num;
-	char sprite_bleu[19] = "sprite/bleu3.png";
-	char sprite_orange[19] = "sprite/orange3.png";
+	char sprite_bleu[19] = "sprite/blue3.png";
+	char sprite_orange[19] = "sprite/yellow3.png";
 
 	int i;
 
@@ -49,13 +49,14 @@ int charger_pion_ia(int taille_grille, char *couleur_pion) {
 	}
 }
 
-int ia_jeux(int taille_grille, int hard_mod) {
+	int ia_jeux(int taille_grille, int hard_mod) {
 	int hauteur_fenetre = 600;
 	int largeur_fenetre = 800;
 
 	couleur lite_white = 15592941;
-	couleur orange = 16344064;
-	couleur bleu = 4147404;
+	couleur bleu = 28647;
+	couleur orange = 15182181;
+
 
 
 
@@ -116,7 +117,7 @@ int ia_jeux(int taille_grille, int hard_mod) {
 
 
 
-	bouton_notification("Placez votre pion", 5, "orange");
+	bouton_notification("Placez le Soleil", 5, "orange");
 	while(placer_orange == 0) {
 		cliquee = SourisCliquee();
 		if(cliquee == 1) {
@@ -178,7 +179,7 @@ int ia_jeux(int taille_grille, int hard_mod) {
 	while(fin_partie == 0) {
 
 
-		bouton_notification("Deplacez votre pion", 5, "orange");
+		bouton_notification("Deplacez le Soleil", 5, "orange");
 		placer_orange = 0;
 		i = 0;
 		while(placer_orange == 0) {
@@ -382,7 +383,7 @@ int ia_jeux(int taille_grille, int hard_mod) {
 
 
 				puts("L'IA se déplace trop loin !");
-				bouton_notification("L'IA reflechit", 20, "bleu");
+				bouton_notification("L'IA reflechit", 5, "bleu");
 			}
 		}
 
