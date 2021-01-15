@@ -31,8 +31,9 @@ void dessiner_contour_grille(int taille_grille) {
 	int hauteur_fenetre = 600;
 	int largeur_fenetre = 800;
 
-	couleur lite_black = 2039583;
+	couleur lite_black = 14474460;
 	couleur lite_white = 15592941;
+
 
 	ChoisirCouleurDessin(lite_white);
 	RemplirRectangle(largeur_fenetre*0.2, hauteur_fenetre*0.1, hauteur_fenetre - (hauteur_fenetre*0.2), hauteur_fenetre - (hauteur_fenetre*0.2));
