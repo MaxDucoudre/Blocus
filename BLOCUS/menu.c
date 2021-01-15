@@ -6,8 +6,7 @@
 #include"jeux.h"
 
 
-
-short int menu(int i, struct parametres o) {
+short int menu(int i, int j) {
 	short int lancer_partie = 0;
 	short int lancer_menu = 1;
 	short int options = 0;
@@ -20,45 +19,60 @@ short int menu(int i, struct parametres o) {
 	int largeur_fenetre = 800;
 	short int cliquee = 0;
 
+	struct parametres o;
 
+	if(j==0) {
+		o.grille = 6;
+		o.ia = 1;
+		o.hard = 1;
+	}
+
+	lancer_menu = 1;
 	while(lancer_menu == 1) {
-		ChargerImageFond("image/muraille.jpg");
-		ChoisirCouleurDessin(orange);
-		EcrireTexte(largeur_fenetre*0.45, hauteur_fenetre*0.10, "Blocus !", 2);
+		
 
+		ChargerImageFond("image/menu_principal1.png");
 
-		dessin_bouton("Lancer la partie", 3);
-		dessin_bouton("Statistiques", 4);
-		dessin_bouton("Options", 5);
-		dessin_bouton("Quitter", 8);
+		dessin_bouton("Options", 1);
+		dessin_bouton("Statistics", 2.5);
+		dessin_bouton("Exit", 4.25);
+		dessin_bouton_lancer_partie('y');
+		dessin_bouton_lancer_partie('n');
 
 		lancer_bouton = 1;
 
 		do {
 			SourisPosition();
-			bouton_hover(3);
-			bouton_hover(4);
-			bouton_hover(5);
-			bouton_hover(8);
+			bouton_hover("Options", 1);
+			bouton_hover("Statistics", 2.5);
+			bouton_hover("Exit", 4.25);
+			hover_bouton_lancer_partie('y');
+			hover_bouton_lancer_partie('n');
+
 
 			cliquee = SourisCliquee();
 			if(cliquee == 1) {
-				lancer_partie = bouton_clique("Lancer la partie", 3);
+				lancer_partie = cliquee_bouton_lancer_partie();
 				if (lancer_partie == 1) {
 					printf("Lancer la partie\n");
 					jeux(o);
 					return 0;
 				}
+				if(lancer_partie == 2) {
+					lancer_menu = 0;
+					return 3;
+					
+				}
 
 			/* statistiques */
 
-				statistiques = bouton_clique("Statistiques", 4);
+				statistiques = bouton_clique("Statistics", 2.5);
 				if (statistiques == 1) {
 					printf("Statistiques\n");
 				}
 
 			/* Options */
-				options = bouton_clique("Options", 5); 
+				options = bouton_clique("Options", 1); 
 				if (options == 1) {
 					printf("Options\n");
 					o = menu_options(i, o);
@@ -69,7 +83,7 @@ short int menu(int i, struct parametres o) {
 
 
 			/* Quitter */
-				quitter = bouton_clique("Quitter", 8);
+				quitter = bouton_clique("Exit", 4.25);
 				if (quitter == 1) {
 					printf("Quitter\n");
 

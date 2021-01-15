@@ -10,12 +10,13 @@ int main(void) {
 	short int action = 0;
 
 	int i = 0;
+	int j = 0;
 
 	int hauteur_fenetre = 600;
 	int largeur_fenetre = 800;
+	int cliquee;
 
-	struct parametres o = {6, 1, 1};
-
+	short int start_menu = 0;
 
 
 	initialisation_graphique = InitialiserGraphique();
@@ -27,32 +28,41 @@ int main(void) {
 	CreerFenetre(0, 0, largeur_fenetre, hauteur_fenetre);
 	ChoisirTitreFenetre("BLOCUS");
 
-/*
-	ChargerImageFond("image/start1.jpg");
+	ChargerImageFond("image/init1.png");
+
+
+
 	do {
 		SourisPosition();
-		printf("%d %d\n", _X, _Y);
-		if(_X > 90 && _X < 715 && _Y > 118 && _Y < 370) {
-			ChargerImageFond("image/start2.jpg");
+		if(_X > 0 && _X < 60 && _Y > 0 && _Y < 80) {
+			ChargerImageFond("image/init2.png");
 		} else {
-			ChargerImageFond("image/start1.jpg");
+			ChargerImageFond("image/background/init1.png");
+		}	
+
+
+		cliquee = SourisCliquee();	
+		if(cliquee == 1) {
+			if(_X > 0 && _X < 60 && _Y > 0 && _Y < 80) {
+				while(action == 0) {
+
+					action = menu(i, j);
+					if(action == 3) {
+						action = 0;
+						break;
+					}
+					i=1;
+					j=1;
+
+
+					if(action == 2) {
+						CacherFenetre();
+						Touche();
+						FermerGraphique();
+						return EXIT_SUCCESS;
+					}
+				}
+			}
 		}
-
-	} while(1);
-	*/
-
-
-	while(action == 0) {
-
-		action = menu(i, o);
-		i=1;
-		
-		if(action == 2) {
-			CacherFenetre();
-			Touche();
-			FermerGraphique();
-			return EXIT_SUCCESS;
-		}
-	}
-
+	} while(start_menu != 1);
 }
