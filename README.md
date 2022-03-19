@@ -1,5 +1,9 @@
-# PT1.1
+# Projet Garage Automobile
 
-Projet Tuteuré 1.1
-Max Ducoudré
-Lina Ahres 
+## Domaine : Algorithmique, Programmation et Langages
+
+Tout premier projet de programmation. Il consiste à reproduire un jeu de type Blocus en language C et en utilisant l'interface graphique mis à disposition par l'IUT de Fontainebleau.
+
+Auteurs :
+* Max Ducoudré 
+* Lina Ahres 
